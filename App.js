@@ -6,7 +6,10 @@ async function main() {
   var dadosProcessados = Processor.Process(data);
   var usuarios = new Table(dadosProcessados);
 
-  console.log(usuarios.header);
+  usuarios.rows.push(["João", "Formação PHP", "PHP", "32"]);
+
+  console.log(usuarios.RowCount);
+  console.log(usuarios.ColumnCount);
 }
 
 main();
