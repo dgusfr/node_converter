@@ -3,61 +3,43 @@ const util = require("util");
 
 class Reader {
   constructor() {
-    // Promisify fs.readFile para que possamos usar async/await
     this.reader = util.promisify(fs.readFile);
   }
 
-  async Read(filepath) {
+  async readFile(filePath) {
     try {
-      // Tente ler o arquivo e retorne o conteúdo
-      return this.reader(filepath, "utf8");
-    } catch (err) {
-      // Se houver um erro, imprima-o e retorne null
-      console.error("Erro ao ler o arquivo:", err);
+      const data = await this.reader(filePath, "utf8");
+      return data;
+    } catch (error) {
+      console.error(`Error reading file from path: ${filePath}`, error);
       return null;
     }
   }
 }
 
-class Writer {
-  constructor() {
-    // Promisify fs.writeFile para que possamos usar async/await
-    this.writer = util.promisify(fs.writeFile);
-  }
-
-  async Write(filepath, data) {
-    try {
-      // Tente escrever no arquivo e imprima uma mensagem de sucesso
-      await this.writer(filepath, data);
-      console.log("Arquivo escrito com sucesso!");
-    } catch (err) {
-      // Se houver um erro, imprima-o
-      console.error("Erro ao escrever no arquivo:", err);
-    }
-  }
-}
-
+//Transformando .CSV em arrays
 class Processor {
-  Process(data) {
-    // Separe o conteúdo por linhas
-    var lines = data.split("\n");
+  static Process(data) {
+    var lines = data.split("\r\n");
+    var rows = [];
 
-    // Remova a última linha (que é vazia)
-    lines.pop();
-
-    // Crie um array de objetos com os dados separados por vírgula
-    var arr = [];
-    lines.forEach((line) => {
-      var cols = line.split(",");
-      arr.push({
-        name: cols[0],
-        email: cols[1],
-        id: cols[2],
-      });
+    lines.forEach((row) => {
+      var arr = row.split(",");
+      rows.push(arr);
     });
-
-    return arr;
+    return rows;
   }
 }
 
-module.exports = { Reader, Writer, Processor };
+class Table {
+  constructor(arr) {
+    if (!arr) {
+      throw new Error("Array is undefined in Table constructor");
+    }
+    this.header = arr[0];
+    arr.shift();
+    this.rows = arr;
+  }
+}
+
+module.exports = { Reader, Processor, Table };

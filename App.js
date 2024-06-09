@@ -1,14 +1,12 @@
-const { Reader, Writer, Processor } = require("./ReaderWriter.js");
+const { Reader, Processor, Table } = require("./ReaderWriter.js");
 var leitor = new Reader();
-var escritor = new Writer();
 
 async function main() {
   var data = await leitor.readFile("./users.csv");
-  console.log(data);
+  var dadosProcessados = Processor.Process(data);
+  var usuarios = new Table(dadosProcessados);
 
-  await escritor.Write("./file.txt", "Olá"); // Escrevendo "Olá" no arquivo file.txt
-
-  Processor.Process(data);
+  console.log(usuarios.header);
 }
 
 main();
