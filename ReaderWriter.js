@@ -1,6 +1,7 @@
 const fs = require("fs");
 const util = require("util");
 const ejs = require("ejs");
+const { writer } = require("repl");
 
 class Reader {
   constructor() {
@@ -14,6 +15,22 @@ class Reader {
     } catch (error) {
       console.error(`Error reading file from path: ${filePath}`, error);
       return null;
+    }
+  }
+}
+
+class Writer {
+  constructor() {
+    this.writer = util.promisify(fs.writeFile);
+  }
+
+  async writeFile(filePath, data) {
+    try {
+      await this.writer(filePath, data);
+      return true;
+    } catch (error) {
+      console.error(`Error writing file to path: ${filePath}`, error);
+      return false;
     }
   }
 }
