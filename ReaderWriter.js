@@ -2,6 +2,7 @@ const fs = require("fs");
 const util = require("util");
 const ejs = require("ejs");
 const { writer } = require("repl");
+var pdf = require("html-pdf");
 
 class Reader {
   constructor() {
@@ -87,4 +88,18 @@ class HtmlParser {
   }
 }
 
-module.exports = { Reader, Writer, Processor, Table, HtmlParser };
+class PDFWriter {
+  static WritePDF(fileName, html) {
+    pdf.create(html, {}).toFile(fileName, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("PDF criado com sucesso!");
+      }
+    });
+    // pdf.fromHTML(html, 0, 0, { width: 210, height: 300 });
+    // pdf.save(fileName);
+  }
+}
+
+module.exports = { Reader, Writer, Processor, Table, HtmlParser, PDFWriter };
