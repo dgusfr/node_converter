@@ -1,5 +1,6 @@
 const fs = require("fs");
 const util = require("util");
+const ejs = require("ejs");
 
 class Reader {
   constructor() {
@@ -27,7 +28,8 @@ class Processor {
       var arr = row.split(",");
       rows.push(arr);
     });
-    return rows;
+
+    return rows; // Adicione esta linha
   }
 }
 
@@ -51,12 +53,20 @@ class Table {
 }
 
 class HtmlParser {
-  static async ParseToHtml(table) {
-    return await ejs.reanderFile(
-      "./table.ejs",
-      { header: table.header },
-      (err, html) => {}
-    );
+  static ParseToHtml(table) {
+    return new Promise((resolve, reject) => {
+      ejs.renderFile(
+        "./table.ejs",
+        { header: table.header, rows: table.rows },
+        (err, html) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(html);
+          }
+        }
+      );
+    });
   }
 }
 

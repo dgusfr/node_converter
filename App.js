@@ -11,5 +11,3 @@ async function main() {
 }
 
 main();
-
-//parei em 7:20 minutos do video
