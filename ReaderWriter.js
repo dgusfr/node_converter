@@ -50,4 +50,14 @@ class Table {
   }
 }
 
-module.exports = { Reader, Processor, Table };
+class HtmlParser {
+  static async ParseToHtml(table) {
+    return await ejs.reanderFile(
+      "./table.ejs",
+      { header: table.header },
+      (err, html) => {}
+    );
+  }
+}
+
+module.exports = { Reader, Processor, Table, HtmlParser };

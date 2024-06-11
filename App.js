@@ -1,15 +1,15 @@
-const { Reader, Processor, Table } = require("./ReaderWriter.js");
+const { Reader, Processor, Table, HtmlParser } = require("./ReaderWriter.js");
 var leitor = new Reader();
 
 async function main() {
   var data = await leitor.readFile("./users.csv");
   var dadosProcessados = Processor.Process(data);
   var usuarios = new Table(dadosProcessados);
+  var html = await HtmlParser.ParseToHtml(usuarios);
 
-  usuarios.rows.push(["João", "Formação PHP", "PHP", "32"]);
-
-  console.log(usuarios.RowCount);
-  console.log(usuarios.ColumnCount);
+  console.log(html);
 }
 
 main();
+
+//parei em 7:20 minutos do video
