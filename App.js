@@ -13,7 +13,8 @@ async function main() {
   var dadosProcessados = Processor.Process(data);
   var usuarios = new Table(dadosProcessados);
   var html = await HtmlParser.ParseToHtml(usuarios);
-  escritor.writeFile("htmlGerado.html", html);
+  //date.now gera um novo arquivo a cada vez que o codigo é rodado
+  escritor.writeFile(Date.now() + ".html", html);
 }
 
 main();
