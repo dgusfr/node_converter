@@ -24,12 +24,12 @@ class Writer {
     this.writer = util.promisify(fs.writeFile);
   }
 
-  async writeFile(filePath, data) {
+  async writeFile(fileName, data) {
     try {
-      await this.writer(filePath, data);
+      await this.writer(fileName, data);
       return true;
     } catch (error) {
-      console.error(`Error writing file to path: ${filePath}`, error);
+      console.error(`Error writing file to path: ${fileName}`, error);
       return false;
     }
   }
@@ -87,4 +87,4 @@ class HtmlParser {
   }
 }
 
-module.exports = { Reader, Processor, Table, HtmlParser };
+module.exports = { Reader, Writer, Processor, Table, HtmlParser };
