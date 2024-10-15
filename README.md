@@ -1,6 +1,6 @@
 # Conversor com Node JS
 
-Este projeto tem como objetivo implementar um conversor de formatos em Node JS.
+Este projeto é um conversor de formatos utilizando Node JS.
 
 <div align="center">
   <img src="img/logo.png" alt="Imagem do Projeto" width="1000">
